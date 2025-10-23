@@ -1,0 +1,131 @@
+/* main.css */
+
+.main-container {
+  display: flex;
+  height: calc(100vh - 100px);
+}
+
+.master-panel {
+  width: 25%;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background: #fafafa;  
+}
+
+.detail-panel {
+  flex: 1;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  box-sizing: border-box;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-item {
+  padding: 0.5em;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.item-item:hover,
+.item-item.selected {
+  background-color: #e0e0e0;
+}
+
+.detail-row {
+  margin-bottom: 0.5em;
+}
+.detail-row strong {
+  width: 100px;
+  display: inline-block;
+}
+.detail-actions {
+  margin-top: 1em;
+}
+.detail-actions .global-btn + .global-btn {
+  margin-left: 0.5em;
+}
+
+/* Photos */
+
+.pictures-container {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.picture-item {
+  position: relative;
+}
+.picture-item img {
+  max-width: 150px;
+  max-height: 150px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.picture-item .btn-delete-item {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  z-index: 10;
+}
+
+/* by default the lightbox is hidden */
+#lightbox-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* when needed, its class become .active */
+#lightbox-modal.active {
+  display: flex;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+}
+
+#lightbox-image {
+  max-width: 90%;
+  max-height: 90%;
+  position: relative;
+  z-index: 1001;
+}
+
+#lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1002;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}

@@ -1,0 +1,250 @@
+<!-- templates/main.html -->
+
+{% extends "base.html" %}
+{% block title %}Homepage{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="main-container">
+
+        <!-- Left Column -->
+
+        <aside class="master-panel">
+
+            <h2>Lista colli</h2>
+            <p>Riportati come collo - matricola</p><br>
+
+            <button id="btn-add-item" class="global-btn requires-auth">Aggiungi nuovo</button><br><br>
+
+            <button id="btn-export-excel" class="global-btn requires-auth" data-export-url="{{ url_for('main.export_xlsx') }}">Esporta dati in Excel</button><br><br>
+
+            <input type="text" id="search-item" placeholder="Cerca..." class="search-input">
+
+            <!-- Section List Magazzino 1 -->
+
+            <h3>Magazzino 1</h3>
+
+            <ul id="item-list-magazzino-1" class="item-list">
+                {% for item in items_magazzino_1 %}
+                <li class="item-item"
+                    data-id="{{ item.id }}"
+                    data-collo="{{ item.collo }}"
+                    data-matricola="{{ item.matricola }}"
+                    data-codice="{{ item.codice }}"
+                    data-descrizione="{{ item.descrizione }}"
+                    data-quantita="{{ item.quantita }}"
+                    data-locazione="{{ item.locazione }}"
+                    data-note="{{ item.note }}"
+                    data-pictures='{{ item.picture_dicts | tojson }}'>
+                    <span class="item-collo">{{ item.collo }} - </span>
+                    <span class="item-matricola">{{ item.matricola }}</span>
+                    <button class="btn-delete-item requires-auth"
+                            data-delete-url="{{ url_for('main.delete_item', id=item.id) }}">
+                    X
+                    </button>
+                </li>
+                {% else %}
+                <li class="empty-list">Nessun collo in magazzino 1.</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Section List Magazzino 2 -->
+
+            <h3>Magazzino 2</h3>
+
+            <ul id="item-list-magazzino-2" class="item-list">
+                {% for item in items_magazzino_2 %}
+                <li class="item-item"
+                    data-id="{{ item.id }}"
+                    data-collo="{{ item.collo }}"
+                    data-matricola="{{ item.matricola }}"
+                    data-codice="{{ item.codice }}"
+                    data-descrizione="{{ item.descrizione }}"
+                    data-quantita="{{ item.quantita }}"
+                    data-locazione="{{ item.locazione }}"
+                    data-note="{{ item.note }}"
+                    data-pictures='{{ item.picture_dicts | tojson }}'>
+                    <span class="item-collo">{{ item.collo }} - </span>
+                    <span class="item-matricola">{{ item.matricola }}</span>
+                    <button class="btn-delete-item requires-auth"
+                            data-delete-url="{{ url_for('main.delete_item', id=item.id) }}">
+                    X
+                    </button>
+                </li>
+                {% else %}
+                <li class="empty-list">Nessun collo in magazzino 2.</li>
+                {% endfor %}
+            </ul>
+
+        </aside>
+
+
+        <!-- Right Column -->
+
+        <main class="detail-panel" style="display:none;">
+
+            <div id="item-details">
+                
+                <h2>Dettagli oggetto</h2>
+                <br>
+
+                <div class="detail-row">
+                    <strong>Collo:</strong>
+                    <span id="detail-collo"></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Matricola:</strong>
+                    <span id="detail-matricola"></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Codice:</strong>
+                    <span id="detail-codice"></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Descrizione:</strong>
+                    <span id="detail-descrizione"></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Quantità:</strong>
+                    <span id="detail-quantita"></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Locazione:</strong>
+                    <span id="detail-locazione"></span>
+                </div>
+                <div class="detail-row">
+                    <strong>Note:</strong>
+                    <span id="detail-note"></span>
+                </div>
+
+                <br>
+
+                <div class="detail-actions">
+                    <button type="button" id="btn-edit-item" class="global-btn requires-auth">Modifica</button>
+                    <button type="button" id="btn-request-transfer" class="global-btn requires-auth">Richiedi trasferimento</button>
+                </div>
+            </div>
+
+            <br><br>
+
+            <h3>Foto</h3>
+
+            <!-- Upload Photos -->
+            
+            <form id="upload-photos-form" enctype="multipart/form-data">
+                <input type="hidden" name="item_id" id="upload-item-id">
+                <label>Carica immagini:
+                    <input type="file" name="photos" multiple accept="image/*" required>
+                </label>
+                <button type="submit" class="global-btn requires-auth">Upload</button>
+            </form>
+
+            <br>
+
+            <!-- Photos visualization -->
+
+            <div id="pictures-list" class="pictures-container"></div>
+
+        </main>
+
+    </div>
+
+    <!-- Adding Item Modal -->
+
+    <div class="modal-container" id="adding-modal">
+        <div class="modal">
+
+            <h2>Aggiungi nuovo collo</h2>
+
+            <form action="{{ url_for('main.add_item') }}" method="post">
+                <label>Collo:<br>
+                    <input type="text" name="collo" required>
+                </label><br><br>
+                <label>Codice:<br>
+                    <input type="text" name="codice" required>
+                </label><br><br>
+                <label>Matricola:<br>
+                    <input type="text" name="matricola" required>
+                </label><br><br>
+                <label>Descrizione:<br>
+                    <input type="text" name="descrizione" required>
+                </label><br><br>
+                <label>Quantità:<br>
+                    <input type="text" name="quantita" required>
+                </label><br><br>
+                <label>Locazione:
+                    <select name="locazione" required>
+                        <option value="magazzino-1">Magazzino 1</option>
+                        <option value="magazzino-2">Magazzino 2</option>
+                    </select>
+                </label><br><br>
+                <label>Note:<br>
+                    <input type="text" name="note" required>
+                </label><br><br>
+                <button class="global-btn" type="submit">Salva</button>
+                <button class="global-btn" type="button" id="btn-close-add">Annulla</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+
+    <div class="modal-container" id="modify-modal">
+        <div class="modal">
+
+            <h2>Modifica collo</h2>
+
+            <form id="modify-form" method="post">
+                <label>Collo:<br>
+                    <input type="text" name="collo" required>
+                </label><br><br>
+                <label>Codice:<br>
+                    <input type="text" name="codice" required>
+                </label><br><br>
+                <label>Matricola:<br>
+                    <input type="text" name="matricola" required>
+                </label><br><br>
+                <label>Descrizione:<br>
+                    <input type="text" name="descrizione" required>
+                </label><br><br>
+                <label>Quantità:<br>
+                    <input type="text" name="quantita" required>
+                </label><br><br>
+                <label>Locazione:
+                    <select name="locazione" required>
+                        <option value="magazzino-1">Magazzino 1</option>
+                        <option value="magazzino-2">Magazzino 2</option>
+                    </select>
+                </label><br><br>
+                <label>Note:<br>
+                    <input type="text" name="note" required>
+                </label><br><br>
+                <button class="global-btn" type="submit">Salva</button>
+                <button class="global-btn" type="button" id="btn-close-modify">Annulla</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Photos -->
+
+    <div id="lightbox-modal" class="lightbox-hidden">
+        <div id="lightbox-backdrop" class="lightbox-backdrop"></div>
+        <img id="lightbox-image" src="" alt="Anteprima immagine">
+        <button id="lightbox-close">X</button>
+    </div>
+
+
+    {% block scripts_extra %}
+        <script>
+            window.modifyItemUrlBase = "{{ url_for('main.modify_item', id=0) }}";
+            window.requestTransferUrlBase = "{{ url_for('main.request_transfer', id=0) }}".replace(/0$/, '');
+        </script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% endblock %}
+
+{% endblock %}

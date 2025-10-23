@@ -1,0 +1,235 @@
+/* base.css */
+
+/* ------------- Reset & Base ------------- */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: #fdfdfd;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+main.site-content {
+  flex: 1;
+  padding: 1em;
+}
+
+/* ------------- Header ------------- */
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75em 1.5em;
+  background-color: #ff5f20;
+  border-bottom: 1px solid #ddd;
+}
+
+.site-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-header .logo img {
+  width: 50px;
+  height: auto;
+  margin-right: 0.5em;
+}
+
+.site-header .logo a {
+  text-decoration: none;
+  color: #000000;
+  font-size: 1.25rem;
+}
+
+.site-header .header-right {
+  display: flex;
+  align-items: center;
+}
+
+.site-header .header-right a,
+.site-header .header-right button {
+  margin-left: 1em;
+  text-decoration: none;
+  color: #000000;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.site-header .header-right span {
+  color: #000000;
+}
+
+.site-header .header-right form input {
+  margin-right: 0.5em;
+  padding: 0.3em 0.5em;
+}
+
+/* ------------- Flash messages ------------- */
+
+#flashes {
+  list-style: none;
+  margin: 1em;
+}
+
+#flashes li {
+  padding: 0.75em 1em;
+  margin-bottom: 0.5em;
+  border-radius: 4px;
+  transition: opacity 0.5s ease;
+}
+
+#flashes li.fade-out {
+  opacity: 0;
+}
+
+#flashes li.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+#flashes li.error {
+  background-color: #f5c6cb;
+  color: #721c24;
+}
+
+#flashes li.danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+
+/* ------------- Footer ------------- */
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1.5em;
+  background-color: #ff5f20;
+  color: #fff;
+}
+
+.footer-content p,
+.footer-content a {
+  color: black;
+}
+
+
+/* ----------- Global btn ----------- */
+
+.global-btn {
+  padding: 0.75em 1.25em;
+  border: 2px solid #000000;
+  border-radius: 4px;
+  background: #fff;
+  color: #000000;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.global-btn:hover {
+  background: #ff5f20;
+  color: #000000;
+}
+
+.header-btn {
+  padding: 0.4em 0.8em;
+  border: 2px solid #000000;
+  border-radius: 4px;
+  background: #ff5f20;
+  color: #000000;
+  font-size: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+
+.header-btn:hover {
+  background: #ff4800;
+  color: #000000;
+}
+
+.btn-delete-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-delete-item:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.btn-delete-item:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.5);
+}
+
+
+/* ----------- Global input ----------- */
+
+.global-input {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+
+/* ----------- Modal ----------- */
+
+.modal-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+}
+
+.modal {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: #fff;
+  padding: 1em;
+  border-radius: 8px;
+  width: 320px;
+}

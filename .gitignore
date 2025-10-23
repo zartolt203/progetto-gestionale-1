@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+
+# Env & config sensibili
+.env
+config.py
+
+# DB data (se usi bind-mount locale)
+_data/
+*.sql
+*.dump
+
+# Upload runtime
+app/static/uploads/
+app/static/uploads/colli/
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Gestione Trasferimenti{% endblock %}</title>
+
+        <!-- CSS Style -->
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+        {% block styles %}{% endblock %}
+
+    </head>
+
+    <body data-is-authenticated="{{ current_user.is_authenticated|tojson }}">
+        
+        <header class="site-header">
+
+            <div class="logo">
+                <h1><strong>Gestione Trasferimenti</strong></h1>
+                <img src="/static/img/logo_azienda1.png" alt="logo_azienda1">
+            </div>
+
+            <div class="header-right">
+
+                {% if not current_user.is_authenticated %}
+                    <form action="{{ url_for('auth.login') }}" method="post">
+                        <input name="password" type="password" placeholder="Password..." required>
+                        <button class="header-btn" type="submit">Login</button>
+                    </form>
+
+                {% else %}
+                    <span>Ciao, sei loggato come amministratore!</span>
+                    <a href="{{ url_for('auth.logout') }}" class="header-btn">Logout</a>
+                {% endif %}
+
+            </div>
+
+        </header>
+
+        <ul id="flashes">
+            {% with msgs = get_flashed_messages(with_categories=true) %}
+                {% for cat, msg in msgs %}
+                    <li class="{{ cat }}">{{ msg }}</li>
+                {% endfor %}
+            {% endwith %}
+        </ul>
+
+        <main class="site-content">
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Gestionale per trasferimenti.</p>
+                <p>Powered by <a href="https://www.azienda1.com/" target="_blank">azienda1</a></p>
+            </div>
+        </footer>
+
+        <script src="{{ url_for('static', filename='js/base.js') }}" defer></script>
+
+    </body>
+</html>
