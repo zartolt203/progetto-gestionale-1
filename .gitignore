@@ -10,16 +10,14 @@ venv/
 .idea/
 .DS_Store
 
-# Env & config sensibili
+# env & config sensibili
 .env
 config.py
 
-# DB data (se usi bind-mount locale)
+# DB data 
 _data/
 *.sql
 *.dump
 
-# Upload runtime
+# Uploads
 app/static/uploads/
-app/static/uploads/colli/
-
